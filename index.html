@@ -119,6 +119,44 @@
         }
         a{color:var(--accent);text-decoration:none}
         .badge{display:inline-block;background:#eef6ff;color:var(--accent);padding:6px 10px;border-radius:999px;font-weight:600;font-size:13px}
+
+        /* Objetivos: chips compactos, alinhamento horizontal com quebra automática */
+        .objective-list{
+            list-style:none;
+            padding:0;
+            margin:0;
+            display:flex;
+            flex-wrap:wrap;
+            gap:8px;
+        }
+        .objective-list li{margin:0}
+        .objective-chip{
+            background:#fcfdff; /* fundo bem próximo de branco */
+            color:#000;         /* texto em preto */
+            padding:7px 12px;
+            border-radius:999px;
+            font-weight:400;    /* sem negrito */
+            font-size:13px;
+            border:1px solid rgba(2,6,23,0.04); /* borda sutil para contraste */
+            box-shadow:none;
+        }
+
+        /* GitHub repo link (ícone + texto) no header */
+        .repo-link{
+            display:inline-flex;
+            align-items:center;
+            gap:8px;
+            margin-top:8px;
+            font-size:13px;
+            color:var(--muted);
+            text-decoration:none;
+            padding:6px 8px;
+            border-radius:8px;
+            transition:background .15s, color .15s;
+        }
+        .repo-link svg{display:block;width:18px;height:18px;color:var(--muted)}
+        .repo-link:hover{background:rgba(11,118,209,0.06);color:var(--accent)}
+        .repo-text{font-size:13px}
     </style>
 </head>
 <body>
@@ -133,6 +171,14 @@
             </div>
             <div style="text-align:right">
                 <div style="color:var(--muted);font-size:13px;margin-top:8px">Lavras — MG</div>
+
+                <!-- GitHub repo link -->
+                <a class="repo-link" href="https://github.com/vssjunior" target="_blank" rel="noopener noreferrer" aria-label="Repositório GitHub de Valdeci">
+                    <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.19 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                    </svg>
+                    <span class="repo-text">github.com/vssjunior</span>
+                </a>
             </div>
         </header>
 
@@ -153,8 +199,11 @@
                 <section class="card" aria-labelledby="qual-title" style="margin-top:16px">
                     <h2 id="qual-title">Qualificações</h2>
                     <ul class="qual-list">
+                        <li>Técnicas de Comunicação — Help School (conclusão: 2009)</li>
                         <li>Minicurso: Introdução à Linguagem C ANSI — UFLA (2010)</li>
                         <li>Analista de Suporte Técnico — Helpschool (2010)</li>
+                        <li>Apresentador de trabalho — XXIII Congresso de Iniciação Científica, UFLA (2010)</li>
+                        <li>Participação — 8º Encontro Regional de Administração, UFLA (2010)</li>
                         <li>Inglês Básico — Centro Vocacional Tecnológico (2011)</li>
                         <li>Redes de Computadores — Prime (2015)</li>
                         <li>GDG In Touch: UX Designer — Google Developer Group (2019)</li>
@@ -166,18 +215,32 @@
                     <h2 id="info-add">Informações Adicionais</h2>
                     <ul class="add-list">
                         <li>CNH categoria A/E (EAR e Toxicológico)</li>
-                        <li>Pacotes Office: LibreOffice, Microsoft Office, Google Workspace</li>
+                        <li>Pacotes Office (LibreOffice, Microsoft Office, Google Workspace)</li>
                         <li>Redes: CAN, LAN, MAN, WAN, Internet; protocolos J1939, J1979, IPv4/IPv6, NAT, DNS</li>
                         <li>Desenvolvimento de soluções para Transporte e Logística (Controle de pneus, manutenção, checklists, gestão de combustíveis e viagens)</li>
                         <li>Experiência em telemetria, rastreamento e otimização de dirigibilidade (Safe Drive / Eco Drive)</li>
+                        <li>Habilidades de comunicação verbal e escrita</li>
+                        <li>Habilidade em conduzir treinamentos</li>
+                        <li>Conhecimento em metodologias ágeis (Scrum e Kanban)</li>
+                        <li>Profissionalismo (ética, pontualidade, postura profissional,
+                        ,Liderança,Dinamismo,Flexibilidade,Bom relacionamento interpessoal
+                        ,Negociação / Persuasão,Capacidade de trabalhar sob pressão
+                        ,Senso de dono,Espírito de equipe)</li>
                     </ul>
                 </section>
             </aside>
 
             <div>
                 <section class="card" aria-labelledby="objetivo-title">
-                    <h2 id="objetivo-title">Objetivo</h2>
-                    <p class="objective"><strong>Analista de Projetos TI</strong> (Cód. da Vaga: 279) — atuação em gestão de backlog, condução de times ágeis, integração entre stakeholders e entrega de valor em produtos de software.</p>
+                    <h2 id="objetivo-title">Objetivos de Atuação</h2>
+                    <ul class="objective-list" aria-describedby="objetivos-desc">
+                        <li><span class="objective-chip">Analista de Projetos</span></li>
+                        <li><span class="objective-chip">Analista de Logística</span></li>
+                        <li><span class="objective-chip">Analista de Dados</span></li>
+                        <li><span class="objective-chip">IoT</span></li>
+                        <li><span class="objective-chip">Redes de Computadores e Infraestrutura</span></li>
+                        <li><span class="objective-chip">Desenvolvimento de Software</span></li>
+                    </ul>
                 </section>
 
                 <section class="card" aria-labelledby="formacao-title" style="margin-top:16px">
@@ -192,25 +255,25 @@
                     <h2 id="exp-title">Experiência Profissional</h2>
 
                     <div class="exp">
-                        <div class="job-meta">02/2022 — Atualmente • Technolog</div>
-                        <div class="job-title">Gerente de Desenvolvimento de Sistemas</div>
+                        <div class="job-meta">02/2022 — Atualmente • <a href="https://www.technolog.com.br" target="_blank" rel="noopener noreferrer">Technolog</a></div>
+                        <div class="job-title">Coordenador de Desenvolvimento de Sistemas</div>
                         <p class="job-desc">Atuação como líder técnico desempenhando papéis como Scrum Master e Product Owner. Auxílio na implantação e manutenção da metodologia Scrum no setor de desenvolvimento de software; gerenciamento da fila de backlog e priorização com foco em entrega de valor conforme interesses dos stakeholders.</p>
                     </div>
 
                     <div class="exp">
-                        <div class="job-meta">10/2019 — 01/2022 • Technolog</div>
+                        <div class="job-meta">10/2019 — 01/2022 • <a href="https://www.technolog.com.br" target="_blank" rel="noopener noreferrer">Technolog</a></div>
                         <div class="job-title">Analista de Sistemas de Automação</div>
                         <p class="job-desc">Projeto e implementação de circuitos eletrônicos e desenvolvimento/manutenção de sistemas embarcados em linguagem derivada de C/C++. Integração de hardware (sensores ECU/FLS, atuadores, relés, sinais sonoros) para automação de veículos, com foco em segurança (Safe Drive) e eficiência (Eco Drive).</p>
                     </div>
 
                     <div class="exp">
-                        <div class="job-meta">09/2018 — 08/2019 • Technolog</div>
+                        <div class="job-meta">09/2018 — 08/2019 • <a href="https://www.technolog.com.br" target="_blank" rel="noopener noreferrer">Technolog</a></div>
                         <div class="job-title">Estagiário — Desenvolvimento de Software</div>
                         <p class="job-desc">Desenvolvimento e manutenção de sistemas web com HTML, JavaScript, PHP, SQL Server; uso de jQuery e AJAX. Atuação também como testador de software (QA) e desenvolvedor de APIs REST.</p>
                     </div>
 
                     <div class="exp">
-                        <div class="job-meta">05/2012 — 09/2016 • WS Telecom (Wire Speed)</div>
+                        <div class="job-meta">05/2012 — 09/2016 • <a href="https://wstelecom.com.br" target="_blank" rel="noopener noreferrer">WS Telecom (Wire Speed)</a></div>
                         <div class="job-title">Técnico em Redes de Computadores</div>
                         <p class="job-desc">Planejamento, implantação, operação e manutenção de redes locais e de acesso à Internet, monitoramento, cabeamento estruturado, certificação, treinamento e consultoria técnica.</p>
                     </div>
