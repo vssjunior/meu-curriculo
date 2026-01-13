@@ -1,43 +1,53 @@
 document.addEventListener('DOMContentLoaded', function () {
   // Arquivo JS principal do currículo
-  // Implementa carregamento dinâmico da lista de cursos a partir de um array JSON
+  // Renderiza dinamicamente a lista de Qualificações a partir de um array em memória
 
-  // Lista inicial de cursos (modifique ou chame window.addCourse para adicionar dinamicamente)
-  const courses = [
-    { title: 'Fundamentos do Power BI', institution: 'Fundação Bradesco', year: 2025, link: '' }
+  const qualifications = [
+    { title: 'Técnicas de Comunicação', institution: 'Help School', year: 2009 },
+    { title: 'Minicurso: Introdução à Linguagem C ANSI', institution: 'UFLA', year: 2010 },
+    { title: 'Analista de Suporte Técnico', institution: 'Helpschool', year: 2010 },
+    { title: 'Apresentador de trabalho', institution: 'XXIII Congresso de Iniciação Científica, UFLA', year: 2010 },
+    { title: 'Participação', institution: '8º Encontro Regional de Administração, UFLA', year: 2010 },
+    { title: 'Inglês Básico', institution: 'Centro Vocacional Tecnológico', year: 2011 },
+  { title: 'Instalações Elétricas Residenciais', institution: 'Prontee', year: 2012 },
+  { title: 'NR10', institution: 'Prontee', year: 2013 },
+    { title: 'Redes de Computadores', institution: 'Prime', year: 2015 },
+    { title: 'GDG In Touch: UX Designer', institution: 'Google Developer Group', year: 2019 },
+    { title: 'White Belt Lean Six-Sigma', institution: 'EDTI', year: 2019 },
+    { title: 'Fundamentos de Governança de TI', institution: 'Fundação Bradesco', year: 2019 },
+    { title: 'Fundamentos do Power BI', institution: 'Fundação Bradesco', year: 2025 }
   ];
 
-  function escapeHtml(str){
-    if(!str) return '';
-    return String(str).replace(/[&<>"']/g, function(m){
-      return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m];
+  function escapeHtml (str) {
+    if (!str && str !== 0) return '';
+    return String(str).replace(/[&<>"']/g, function (m) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
     });
   }
 
-  function formatCourseItem(c){
-    const yearText = c.year ? (typeof c.year === 'number' ? c.year : c.year) : 'data não informada';
-    const linkPart = c.link ? ` — <a href="${escapeHtml(c.link)}" target="_blank" rel="noopener noreferrer">Certificado</a>` : '';
-    return `<li><strong>${escapeHtml(c.title)}</strong> — ${escapeHtml(c.institution)} (${yearText})${linkPart}</li>`;
+  function formatQualificationItem (q) {
+    const yearText = q.year ? `(${escapeHtml(q.year)})` : '(data não informada)';
+    return `<li><strong>${escapeHtml(q.title)}</strong> — ${escapeHtml(q.institution)} ${yearText}</li>`;
   }
 
-  function renderCourses(){
-    const container = document.getElementById('cursos-list');
-    if(!container) return;
-    // Ordena por ano (desc). Cursos sem ano ficam ao final.
-    courses.sort((a,b)=>{
-      const ay = typeof a.year === 'number' ? a.year : -Infinity;
-      const by = typeof b.year === 'number' ? b.year : -Infinity;
-      return by - ay;
+  function renderQualifications () {
+    const container = document.getElementById('qual-list');
+    if (!container) return;
+    // Ordena por ano ascendente (cronológico): cursos mais recentes vão para o final
+    const sorted = qualifications.slice().sort((a, b) => {
+      const ay = typeof a.year === 'number' ? a.year : Infinity;
+      const by = typeof b.year === 'number' ? b.year : Infinity;
+      return ay - by;
     });
-    container.innerHTML = courses.map(formatCourseItem).join('');
+    container.innerHTML = sorted.map(formatQualificationItem).join('');
   }
 
-  // API pública mínima: adicionar curso em tempo de execução
-  window.addCourse = function(course){
-    courses.push(course);
-    renderCourses();
-  }
+  // API pública para adicionar qualificações em tempo de execução
+  window.addQualification = function (q) {
+    qualifications.push(q);
+    renderQualifications();
+  };
 
-  renderCourses();
-  console.log('Cursos carregados:', courses.length);
+  renderQualifications();
+  console.log('Qualificações carregadas:', qualifications.length);
 });
