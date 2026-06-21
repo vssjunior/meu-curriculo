@@ -1,21 +1,28 @@
 document.addEventListener('DOMContentLoaded', function () {
-  // Arquivo JS principal do currículo
-  // Renderiza dinamicamente a lista de Qualificações a partir de um array em memória
-
   const qualifications = [
-    { title: 'Técnicas de Comunicação', institution: 'Help School', year: 2009 },
-    { title: 'Minicurso: Introdução à Linguagem C ANSI', institution: 'UFLA', year: 2010 },
-    { title: 'Analista de Suporte Técnico', institution: 'Helpschool', year: 2010 },
-    { title: 'Apresentador de trabalho', institution: 'XXIII Congresso de Iniciação Científica, UFLA', year: 2010 },
-    { title: 'Participação', institution: '8º Encontro Regional de Administração, UFLA', year: 2010 },
-    { title: 'Inglês Básico', institution: 'Centro Vocacional Tecnológico', year: 2011 },
-  { title: 'Instalações Elétricas Residenciais', institution: 'Prontee', year: 2012 },
-  { title: 'NR10', institution: 'Prontee', year: 2013 },
-    { title: 'Redes de Computadores', institution: 'Prime', year: 2015 },
-    { title: 'GDG In Touch: UX Designer', institution: 'Google Developer Group', year: 2019 },
-    { title: 'White Belt Lean Six-Sigma', institution: 'EDTI', year: 2019 },
-    { title: 'Fundamentos de Governança de TI', institution: 'Fundação Bradesco', year: 2019 },
-    { title: 'Fundamentos do Power BI', institution: 'Fundação Bradesco', year: 2025 }
+    { title: 'Técnicas de Comunicação', institution: 'Help School', year: 2009, category: 'Comunicação e Desenvolvimento' },
+    { title: 'Minicurso: Introdução à Linguagem C ANSI', institution: 'UFLA', year: 2010, category: 'Programação e Sistemas' },
+    { title: 'Analista de Suporte Técnico', institution: 'Helpschool', year: 2010, category: 'Programação e Sistemas' },
+    { title: 'Apresentador de trabalho', institution: 'XXIII Congresso de Iniciação Científica, UFLA', year: 2010, category: 'Eventos e Congressos' },
+    { title: 'Participação', institution: '8º Encontro Regional de Administração, UFLA', year: 2010, category: 'Eventos e Congressos' },
+    { title: 'Inglês Básico', institution: 'Centro Vocacional Tecnológico', year: 2011, category: 'Idiomas' },
+    { title: 'Instalações Elétricas Residenciais', institution: 'Prontee', year: 2012, category: 'Segurança e Normas' },
+    { title: 'NR10', institution: 'Prontee', year: 2013, category: 'Segurança e Normas' },
+    { title: 'Redes de Computadores', institution: 'Prime', year: 2015, category: 'Redes e Infraestrutura' },
+    { title: 'GDG In Touch: UX Designer', institution: 'Google Developer Group', year: 2019, category: 'Programação e Sistemas' },
+    { title: 'White Belt Lean Six-Sigma', institution: 'EDTI', year: 2019, category: 'Gestão, Qualidade e BI' },
+    { title: 'Fundamentos de Governança de TI', institution: 'Fundação Bradesco', year: 2019, category: 'Gestão, Qualidade e BI' },
+    { title: 'Fundamentos do Power BI', institution: 'Fundação Bradesco', year: 2025, category: 'Gestão, Qualidade e BI' }
+  ];
+
+  const categoryOrder = [
+    'Gestão, Qualidade e BI',
+    'Programação e Sistemas',
+    'Redes e Infraestrutura',
+    'Segurança e Normas',
+    'Comunicação e Desenvolvimento',
+    'Idiomas',
+    'Eventos e Congressos'
   ];
 
   function escapeHtml (str) {
@@ -30,24 +37,52 @@ document.addEventListener('DOMContentLoaded', function () {
     return `<li><strong>${escapeHtml(q.title)}</strong> — ${escapeHtml(q.institution)} ${yearText}</li>`;
   }
 
+  function groupByCategory (items) {
+    const groups = {};
+    items.forEach(function (q) {
+      const cat = q.category || 'Outros';
+      if (!groups[cat]) groups[cat] = [];
+      groups[cat].push(q);
+    });
+    return groups;
+  }
+
   function renderQualifications () {
     const container = document.getElementById('qual-list');
     if (!container) return;
-    // Ordena por ano ascendente (cronológico): cursos mais recentes vão para o final
-    const sorted = qualifications.slice().sort((a, b) => {
+
+    const sorted = qualifications.slice().sort(function (a, b) {
       const ay = typeof a.year === 'number' ? a.year : Infinity;
       const by = typeof b.year === 'number' ? b.year : Infinity;
       return ay - by;
     });
-    container.innerHTML = sorted.map(formatQualificationItem).join('');
+
+    const groups = groupByCategory(sorted);
+    const orderedCategories = categoryOrder.filter(function (cat) {
+      return groups[cat] && groups[cat].length;
+    });
+
+    Object.keys(groups).forEach(function (cat) {
+      if (orderedCategories.indexOf(cat) === -1) {
+        orderedCategories.push(cat);
+      }
+    });
+
+    container.innerHTML = orderedCategories.map(function (category) {
+      const items = groups[category].map(formatQualificationItem).join('');
+      return (
+        '<section class="qual-group" aria-label="' + escapeHtml(category) + '">' +
+          '<h3 class="qual-group-title">' + escapeHtml(category) + '</h3>' +
+          '<ul class="qual-list">' + items + '</ul>' +
+        '</section>'
+      );
+    }).join('');
   }
 
-  // API pública para adicionar qualificações em tempo de execução
   window.addQualification = function (q) {
     qualifications.push(q);
     renderQualifications();
   };
 
   renderQualifications();
-  console.log('Qualificações carregadas:', qualifications.length);
 });
