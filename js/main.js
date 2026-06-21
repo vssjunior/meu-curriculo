@@ -3,8 +3,6 @@ document.addEventListener('DOMContentLoaded', function () {
     { title: 'Técnicas de Comunicação', institution: 'Help School', year: 2009, category: 'Comunicação e Desenvolvimento' },
     { title: 'Minicurso: Introdução à Linguagem C ANSI', institution: 'UFLA', year: 2010, category: 'Programação e Sistemas' },
     { title: 'Analista de Suporte Técnico', institution: 'Helpschool', year: 2010, category: 'Programação e Sistemas' },
-    { title: 'Apresentador de trabalho', institution: 'XXIII Congresso de Iniciação Científica, UFLA', year: 2010, category: 'Eventos e Congressos' },
-    { title: 'Participação', institution: '8º Encontro Regional de Administração, UFLA', year: 2010, category: 'Eventos e Congressos' },
     { title: 'Inglês Básico', institution: 'Centro Vocacional Tecnológico', year: 2011, category: 'Idiomas' },
     { title: 'Instalações Elétricas Residenciais', institution: 'Prontee', year: 2012, category: 'Segurança e Normas' },
     { title: 'NR10', institution: 'Prontee', year: 2013, category: 'Segurança e Normas' },
@@ -21,8 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
     'Redes e Infraestrutura',
     'Segurança e Normas',
     'Comunicação e Desenvolvimento',
-    'Idiomas',
-    'Eventos e Congressos'
+    'Idiomas'
   ];
 
   function escapeHtml (str) {
@@ -85,4 +82,16 @@ document.addEventListener('DOMContentLoaded', function () {
   };
 
   renderQualifications();
+
+  var exportBtn = document.getElementById('export-pdf');
+  if (exportBtn) {
+    exportBtn.addEventListener('click', function () {
+      document.body.classList.add('print-mode');
+      window.print();
+    });
+  }
+
+  window.addEventListener('afterprint', function () {
+    document.body.classList.remove('print-mode');
+  });
 });
